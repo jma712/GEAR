@@ -13,7 +13,7 @@ Torch-geometric 1.3.0
 
 ## Dataset
 Consider ```./``` as ```/src```.
-Datasets can be found in ```../datasets/```
+Datasets can be found in ```../dataset/```
 
 ## Run Experiment
 ### Learning node representation

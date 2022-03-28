@@ -12,7 +12,7 @@ Torch-geometric 1.3.0
 ```
 
 ## Dataset
-Datasets can be found in ```./datasets```
+Datasets can be found in ```./datasets/```
 
 ## Run Experiment
 ### Learning node representation
@@ -32,4 +32,3 @@ Acknowledgement: The code in this work is developed based on part of the code in
 [3] Jiao Y, Xiong Y, Zhang J, et al. Sub-graph contrast for scalable self-supervised graph representation learning[C]//2020 IEEE International Conference on Data Mining (ICDM). IEEE, 2020: 222-231.
 [4] Kipf T N, Welling M. Variational graph auto-encoders[J]. arXiv preprint arXiv:1611.07308, 2016.
 ```
-# GEAR

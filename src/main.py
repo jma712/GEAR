@@ -52,8 +52,8 @@ parser.add_argument('--dropout', type=float, default=0.5,
                     help='Dropout rate (1 - keep probability).')
 parser.add_argument('--sim_coeff', type=float, default=0.6,
                     help='regularization similarity')
-parser.add_argument('--dataset', type=str, default='synthetic',
-                    choices=['synthetic','bail', 'credit'])
+parser.add_argument('--dataset', type=str, default='bail',
+                    choices=['synthetic','bail','loan', 'credit', 'german'])
 parser.add_argument('--encoder', type=str, default='sage', choices=['gcn', 'gin', 'sage', 'infomax', 'jk'])
 parser.add_argument('--batch_size', type=int, help='batch size', default=100)
 parser.add_argument('--subgraph_size', type=int, help='subgraph size', default=30)
@@ -558,17 +558,29 @@ if __name__ == '__main__':
         cf_subgraph_list.append(cf_subgraph)
 
         # add more augmentation if wanted
-        # sens_rate_list = [0.0, 0.5, 1.0]
-        # for si in range(len(sens_rate_list)):
-        #     sens_rate = sens_rate_list[si]
-        #     sampled_idx = random.sample(range(n), int(sens_rate * n))
-        #     sens_cf = torch.zeros(n)
-        #     sens_cf[sampled_idx] = 1.
-        #
-        #     data_cf = generate_cf_data(data, sens_idx, mode=1, sens_cf=sens_cf, adj_raw=adj, model_path=model_path)  #
-        #     cf_subgraph = Subgraph(data_cf.x, data_cf.edge_index, ppr_path, args.subgraph_size, args.n_order)
-        #     cf_subgraph.build(postfix='_cf'+str(si))
-        #     cf_subgraph_list.append(cf_subgraph)
+        subgraph_load = True
+        sens_rate_list = [0.0, 1.0]
+        for si in range(len(sens_rate_list)):
+            sens_rate = sens_rate_list[si]
+            sampled_idx = random.sample(range(n), int(sens_rate * n))
+            sens_cf = torch.zeros(n)
+            sens_cf[sampled_idx] = 1.
+            if subgraph_load:
+                path_cf_ag = 'graphFair_subgraph/aug/' + f'{args.dataset}_cf_aug_' + str(si + 1) + '.pkl'
+                with open(path_cf_ag, 'rb') as f:
+                    data_cf = pickle.load(f)['data_cf']
+                    print('loaded counterfactual augmentation data from: ' + path_cf_ag)
+            else:
+                data_cf = generate_cf_data(data, sens_idx, mode=0, sens_cf=sens_cf, adj_raw=adj,
+                                           model_path=model_path)  #
+                path_cf_ag = 'graphFair_subgraph/aug/' + f'{args.dataset}_cf_aug_' + str(si + 1) + '.pkl'
+                with open(path_cf_ag, 'wb') as f:
+                    data_cf_save = {'data_cf': data_cf}
+                    pickle.dump(data_cf_save, f)
+                    print('saved counterfactual augmentation data in: ', path_cf_ag)
+            cf_subgraph = Subgraph(data_cf.x, data_cf.edge_index, ppr_path, args.subgraph_size, args.n_order)
+            cf_subgraph.build(postfix='_cf' + str(si + 1))
+            cf_subgraph_list.append(cf_subgraph)
 
         #
         if experiment_type == 'test':

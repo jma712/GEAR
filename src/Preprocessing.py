@@ -161,7 +161,7 @@ def load_data(path_root, dataset):
     elif dataset == 'synthetic':
         sens_idx = 0
         label_number = 1000
-        path_sythetic = path_root + 'synthetic.mat'
+        path_sythetic = path_root + './dataset/synthetic.mat'
         adj, features, labels, idx_train, idx_val, idx_test, sens, raw_data_info = load_synthetic(path=path_sythetic,
                                                                               label_number=label_number)
     else:

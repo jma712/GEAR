@@ -52,8 +52,8 @@ parser.add_argument('--dropout', type=float, default=0.5,
                     help='Dropout rate (1 - keep probability).')
 parser.add_argument('--sim_coeff', type=float, default=0.6,
                     help='regularization similarity')
-parser.add_argument('--dataset', type=str, default='bail',
-                    choices=['synthetic','bail','loan', 'credit', 'german'])
+parser.add_argument('--dataset', type=str, default='synthetic',
+                    choices=['synthetic','bail', 'credit'])
 parser.add_argument('--encoder', type=str, default='sage', choices=['gcn', 'gin', 'sage', 'infomax', 'jk'])
 parser.add_argument('--batch_size', type=int, help='batch size', default=100)
 parser.add_argument('--subgraph_size', type=int, help='subgraph size', default=30)

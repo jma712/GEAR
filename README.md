@@ -1,14 +1,14 @@
-# GEAR-WSDM22:  Node Representation Learning for Graph Counterfactual Fairness
+# GEAR-WSDM22: Node Representation Learning for Graph Counterfactual Fairness
 
 Code for the WSDM 2022 paper [*Learning Fair Node Representations with Graph Counterfactual Fairness*.](https://arxiv.org/pdf/2201.03662.pdf)
 
-## Environment
+## Environment (Updated for 2025)
 ```
-Python 3.6
-Pytorch 1.6.0
-Sklearn 0.22
-Numpy 1.18.3
-Torch-geometric 1.3.0 
+Python 3.8
+Pytorch 1.12.0
+Sklearn 1.0.2
+Numpy 1.21.6
+Torch-geometric 2.0.4
 ```
 
 ## Dataset
@@ -22,7 +22,7 @@ python main.py --experiment_type train
 ```
 The subgraphs will be generated under ```./graphFair_subgraph/``` at the first time of running. If the files already exist, the subgraph data will be directly loaded. The true counterfactuals for evaluation are in ```./graphFair_subgraph/cf/```, and the augmented data is in ```./graphFair_subgraph/aug/```. The trained GEAR model can be saved in ```./models_save/```.
 
-### Refenrences
+### References
 The code is the implementation of this paper:
 ```
 [1] J. Ma, R. Guo, M. Wan, L. Yang, A. Zhang, and J. Li. Learning fair node representations with graph counterfactual fairness. In Proceedings of the 15th WSDM, 2022

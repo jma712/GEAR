@@ -187,7 +187,7 @@ def evaluate(model, data, subgraph, cf_subgraph_list, labels, sens, idx_select, 
         # counterfactual fairness
         cf = 0.0
         for si in range(len(cf_subgraph_list)):
-            cf_subgraph = cf_subgraph_list[si]
+            cf_ = cf_subgraph_list[si]
             emb_cf = get_all_node_emb(model, idx_select_mask, cf_subgraph, n)
             output_cf = model.predict(emb_cf)
             output_preds_cf = (output_cf.squeeze() > 0).type_as(labels)

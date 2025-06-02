@@ -102,18 +102,6 @@ def pre_analysis(adj, labels, sens):
 
     return
 
-def generate_cf_true(data, dataset, sens_rate_list, sens_idx, save_path, save_file=True, raw_data_info=None, mode=1):
-    n = data.x.shape[0]
-    if dataset == 'synthetic':
-        generate_cf_true_synthetic(data, dataset, sens_rate_list, sens_idx, save_path, save_file=save_file, raw_data_info=raw_data_info)
-        return
-    else:
-        generate_cf_true_rw(data, dataset, sens_rate_list, sens_idx, save_path, save_file=save_file, raw_data_info=raw_data_info)
-
-    return
-
-
-
 # Load data
 # print(args.dataset)
 def load_data(path_root, dataset):
@@ -174,6 +162,20 @@ def load_data(path_root, dataset):
     return adj, features, labels, idx_train, idx_val, idx_test, sens, sens_idx, raw_data_info
 
 
+def generate_cf_true(data, dataset, sens_rate_list, sens_idx, save_path, save_file=True, raw_data_info=None, mode=1):
+    """
+    This function acts as a dispatcher to generate counterfactual data for either synthetic or real-world datasets.
+    """
+    n = data.x.shape[0]
+    if dataset == 'synthetic':
+        generate_cf_true_synthetic(data, dataset, sens_rate_list, sens_idx, save_path, save_file=save_file, raw_data_info=raw_data_info)
+        return
+    else:
+        # real-world data
+        generate_cf_true_rw(data, dataset, sens_rate_list, sens_idx, save_path, save_file=save_file, raw_data_info=raw_data_info)
+
+    return
+    
 # get true cf for real-world datasets
 def generate_cf_true_rw(data, dataset, sens_rate_list, sens_idx, save_path, save_file=True, train='test', raw_data_info=None):
     n = data.x.shape[0]
